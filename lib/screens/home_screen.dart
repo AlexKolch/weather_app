@@ -2,6 +2,8 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:weather_app/bloc/weather_bloc_bloc.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -62,81 +64,105 @@ class HomeScreen extends StatelessWidget {
                   decoration: const BoxDecoration(color: Colors.transparent),
                 ),
               ),
-              SizedBox(
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      'Moscow',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w300,
-                      ),
-                    ),
-                    SizedBox(height: 8),
-                    const Text(
-                      'Good Morning',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 25,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Image.asset('assets/1.png'),
-                    const Center(
-                      child: Text(
-                        '21C',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 55,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ),
-                    const Center(
-                      child: Text(
-                        'THUNDERSTORM',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 25,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 5),
-                    const Center(
-                      child: Text(
-                        'Friday, 15 9:06AM',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w300,
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 30),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              BlocBuilder<WeatherBloc, WeatherBlocState>(
+                builder: (context, state) {
+                  if(state is WeatherBlocSuccess) {
+                  return SizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        TimeRow(image: 'assets/11.png', title: 'Sunrise', subTitle: '5:34 am'),
-                        TimeRow(image: 'assets/12.png', title: 'Sunset', subTitle: '8:34 pm')
+                         Text(
+                          '📍 ${state.weather.areaName}',
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w300,
+                          ),
+                        ),
+                        SizedBox(height: 8),
+                        const Text(
+                          'Good Morning',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 25,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Image.asset('assets/1.png'),
+                         Center(
+                          child: Text(
+                            '${state.weather.temperature!.celsius}°C',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 55,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                        const Center(
+                          child: Text(
+                            'THUNDERSTORM',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 25,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 5),
+                        const Center(
+                          child: Text(
+                            'Friday, 15 9:06AM',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w300,
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 30),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            TimeRow(
+                              image: 'assets/11.png',
+                              title: 'Sunrise',
+                              subTitle: '5:34 am',
+                            ),
+                            TimeRow(
+                              image: 'assets/12.png',
+                              title: 'Sunset',
+                              subTitle: '8:34 pm',
+                            ),
+                          ],
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.symmetric(vertical: 5),
+                          child: Divider(color: Color(0xFF37474F)),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            TimeRow(
+                              image: 'assets/13.png',
+                              title: 'Temp Max',
+                              subTitle: '12C',
+                            ),
+                            TimeRow(
+                              image: 'assets/14.png',
+                              title: 'Temp Min',
+                              subTitle: '8C',
+                            ),
+                          ],
+                        ),
                       ],
                     ),
-                    const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 5),
-                      child: Divider(color: Color(0xFF37474F)),
-                    ),
-                      Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        TimeRow(image: 'assets/13.png', title: 'Temp Max', subTitle: '12C'),
-                        TimeRow(image: 'assets/14.png', title: 'Temp Min', subTitle: '8C')
-                      ],
-                    ),
-                  ],
-                ),
+                  );
+                  } else {
+                    return Container();
+                  }
+                },
               ), //На весь экран
             ],
           ),
@@ -147,7 +173,7 @@ class HomeScreen extends StatelessWidget {
 }
 
 class TimeRow extends StatelessWidget {
-   TimeRow({
+  TimeRow({
     super.key,
     required this.image,
     required this.title,
@@ -157,9 +183,9 @@ class TimeRow extends StatelessWidget {
   final String image;
   String title;
   String subTitle;
-//'assets/11.png'
-//'Sunrise'
-//'5:34 am'
+  //'assets/11.png'
+  //'Sunrise'
+  //'5:34 am'
   @override
   Widget build(BuildContext context) {
     return Row(
