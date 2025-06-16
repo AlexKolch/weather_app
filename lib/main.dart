@@ -19,13 +19,11 @@ class MyApp extends StatelessWidget {
         future: _determinePosition(),
         builder: (context, snap) {
           if (snap.hasData) {
-            print('snap.hasData');
             return BlocProvider<WeatherBloc>(
               create: (context) => WeatherBloc()..add(FetchWeather(snap.data as Position)),
               child: const HomeScreen(),
             );
           } else {
-               print('snap.no Data!!');
             return const Scaffold(
               body: Center(child: CircularProgressIndicator()),
             );
@@ -73,5 +71,6 @@ Future<Position> _determinePosition() async {
 
   // When we reach here, permissions are granted and we can
   // continue accessing the position of the device.
+   print(Geolocator.getCurrentPosition().toString());
   return await Geolocator.getCurrentPosition();
 }
