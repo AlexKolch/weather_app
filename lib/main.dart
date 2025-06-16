@@ -71,6 +71,5 @@ Future<Position> _determinePosition() async {
 
   // When we reach here, permissions are granted and we can
   // continue accessing the position of the device.
-   print(Geolocator.getCurrentPosition().toString());
   return await Geolocator.getCurrentPosition();
 }

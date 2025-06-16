@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:weather_app/bloc/weather_bloc_bloc.dart';
+import 'package:weather_app/screens/time_row.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -190,54 +191,11 @@ Widget getWeatherIcon(int code) {
                     return Container();
                   }
                 },
-              ), //На весь экран
+              ),
             ],
           ),
         ),
       ),
-    );
-  }
-}
-
-class TimeRow extends StatelessWidget {
-  TimeRow({
-    super.key,
-    required this.image,
-    required this.title,
-    required this.subTitle,
-  });
-
-  final String image;
-  String title;
-  String subTitle;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Image.asset(image, scale: 8),
-        const SizedBox(width: 5),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              title,
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.w300,
-              ),
-            ),
-            SizedBox(width: 3),
-            Text(
-              subTitle,
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-          ],
-        ),
-      ],
     );
   }
 }
