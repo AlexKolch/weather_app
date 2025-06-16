@@ -1,16 +1,17 @@
 # weather_app
 
-A new Flutter project.
+The weather service.
 
-## Getting Started
+Receive data about weather state. 
 
-This project is a starting point for a Flutter application.
+Used in a project:
 
-A few resources to get you started if this is your first Flutter project:
+* Flutter
+* Weather, Geolocator, intl plugins
+* equatable package
+* REST API
+* Bloc
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+---
+![Image alt](https://github.com/AlexKolch/weather_app/blob/master/Simulator-Screenshot---iPhone-16---2025-06-16-at-14.23.19.jpg)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
